@@ -36,8 +36,8 @@ const projects = {
   flutter2: {
     name: "Igniscore Gas",
     type: "flutter",
-    url: "https://igniscore-i74aq8yto-vusimuz-cybers-projects.vercel.app/",
-    runCmd: "flutter run -d web-server --web-port=8081",
+    url: "https://igniscore-gas.vercel.app/",
+    runCmd: "flutter run -d web-server --web-port=8080",
     desc: `
       <h2>Igniscore Gas App</h2>
       <p>A Flutter app to manage gas bookings, track deliveries, and monitor usage.</p>
@@ -51,7 +51,7 @@ const projects = {
   django1: {
     name: "Eazyinsure App",
     type: "django",
-    url: "http://localhost:8000",
+    url: "https://eazyinsure.onrender.com/",
     runCmd: "python manage.py runserver",
     desc: `
       <h2>Eazyinsure Web App</h2>
@@ -83,31 +83,13 @@ const projects = {
 
 function openDemo(id) {
   const p = projects[id];
-  const modal = document.getElementById('demoModal');
-  const body = document.getElementById('modalBody');
 
-  document.getElementById('modalTitle').textContent = p.name + ' — Live Demo';
-  document.getElementById('modalUrl').textContent = p.url;
-
-  if (p.type === 'flutter') {
-    body.innerHTML = `
-      <div class="phone-frame-wrapper">
-        <div class="phone-frame">
-          <iframe src="${p.url}" title="${p.name}"></iframe>
-        </div>
-      </div>`;
-  } else {
-    body.innerHTML = `<iframe src="${p.url}" title="${p.name}"></iframe>`;
+  if (!p || !p.url) {
+    console.error("Project or URL not found");
+    return;
   }
 
-  const iframe = body.querySelector('iframe');
-  iframe.onerror = () => showInstructions(body, p);
-
-  fetch(p.url, { mode: 'no-cors' })
-    .catch(() => showInstructions(body, p));
-
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  window.open(p.url, "_blank", "noopener,noreferrer");
 }
 
 function showInstructions(body, p) {
